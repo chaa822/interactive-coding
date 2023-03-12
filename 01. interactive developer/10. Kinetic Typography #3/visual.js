@@ -25,9 +25,9 @@ export class Visual {
 		const index = Math.round(Math.random() * (this.textArr.length - 1));
 		const str = this.textArr[index];
 
+		this.particles = [];
 		this.pos = this.text.setText(str, 26, stageWidth, stageHeight);
 
-		this.particles = [];
 		for (let i = 0; i < this.pos.length; i += 1) {
 			const item = new Particle(this.pos[i]);
 			this.particles.push(item);
@@ -42,6 +42,7 @@ export class Visual {
 
 			const dx = this.mouse.x - item.x;
 			const dy = this.mouse.y - item.y;
+
 			const distance = Math.sqrt(dx * dx + dy * dy);
 			const minDistance = item.radius + this.mouse.radius;
 

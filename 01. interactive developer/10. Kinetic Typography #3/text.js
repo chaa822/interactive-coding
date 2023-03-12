@@ -1,4 +1,3 @@
-
 export class Text {
 
 	constructor() {
@@ -49,15 +48,8 @@ export class Text {
 		
 		const particles = [];
 		for (let height = 0; height < stageHeight; height += density) {
-			//i += 1;
-			//width = (i % 2) == 0 ? 6 : 0;
-
-			++i;
-			const slide = (i % 2 == 0);
-			width = 0;
-			if (slide == 1) {
-				width += 6;
-			}
+			i += 1;
+			width = (i % 2) === 0 ? 6 : 0;
 
 			for (width; width < stageWidth; width += density) {
 				const index = ((width + (height * stageWidth)) * 4) - 1;
