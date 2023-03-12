@@ -6,11 +6,11 @@ export class Text {
 		this.canvas = document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d');
 
-		this.canvas.style.position = 'absolute';
-		this.canvas.style.left = '0';
-		this.canvas.style.top = '0';
+		//this.canvas.style.position = 'absolute';
+		//this.canvas.style.left = '0';
+		//this.canvas.style.top = '0';
 		
-		document.body.appendChild(this.canvas);
+		//document.body.appendChild(this.canvas);
 	}
 
 	setText(str, density, stageWidth, stageHeight) {
@@ -28,17 +28,11 @@ export class Text {
 		this.ctx.fillStyle = `rgba(0, 0, 0, 0.3)`;
 		this.ctx.textBaseline = `middle`;
 		
-		// 지정된 텍스트의 너비(픽셀)가 포함된 객체를 반환
 		const fontPos = this.ctx.measureText(myText);
 
-		// fillText: 외곽선 없이 텍스트 그리기
-		// string, x, y, 
 		this.ctx.fillText(
-			// 그릴 문자열
 			myText,
-			// X 좌표: (전체 넓이 - 폰트 넓이) / 2 := 여백의 반 (정중앙 위치)
 			(stageWidth - fontPos.width) / 2,
-			// 
 			fontPos.actualBoundingBoxAscent + fontPos.actualBoundingBoxDescent + ((stageHeight - fontSize) / 2)
 		);
 
@@ -46,7 +40,7 @@ export class Text {
 	}
 
 	dotPos(density, stageWidth, stageHeight) {
-		// x, y, stageWidth, stageHeight
+		
 		const imageData = this.ctx.getImageData(0, 0, stageWidth, stageHeight).data;
 
 		let i = 0;
@@ -55,13 +49,20 @@ export class Text {
 		
 		const particles = [];
 		for (let height = 0; height < stageHeight; height += density) {
-			i += 1;
-			width = (i % 2) == 0 ? 6 : 0;
+			//i += 1;
+			//width = (i % 2) == 0 ? 6 : 0;
+
+			++i;
+			const slide = (i % 2 == 0);
+			width = 0;
+			if (slide == 1) {
+				width += 6;
+			}
 
 			for (width; width < stageWidth; width += density) {
 				const index = ((width + (height * stageWidth)) * 4) - 1;
 				pixel = imageData[index];
-				if (pixel !== 0 && 0 < width && width < stageWidth && 0 < height && height < stageHeight) {
+				if (pixel !== 0 && (0 < width && width < stageWidth) && (0 < height && height < stageHeight)) {
 					particles.push({ x: width, y: height });
 				}
 			}
